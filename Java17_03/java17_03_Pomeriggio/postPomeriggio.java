@@ -122,7 +122,7 @@ public class postPomeriggio {
                 in.nextLine();
 
                 // condizione per anno bisestile
-                if (anno % 4 == 0 && anno % 100 != 0 || anno % 400 == 0) {
+                if ((anno % 4 == 0 && anno % 100 != 0) || (anno % 400 == 0)) {
                     System.out.println("Anno bisestile!");
                 } else {
                     System.out.println("Anno non bisestile!");
