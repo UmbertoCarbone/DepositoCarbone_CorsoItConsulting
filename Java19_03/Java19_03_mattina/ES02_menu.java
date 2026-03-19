@@ -57,14 +57,18 @@ public class ES02_menu {
                     }
                     break;
                 case 4:
-                    // controllo se esiste il nome, se esiste lo cancella, altrimenti messaggio di errore
+                    // controllo se esiste il nome, se esiste lo cancella, altrimenti messaggio di
+                    // errore
                     System.out.println("Elimina un nome dalla lista");
                     String nomeEliminato = scannerStr.nextLine();
 
-                    // se listName contiene il nome da eliminare, cancella il nome inserito dalla lista
+                    // se listName contiene il nome da eliminare, cancella il nome inserito dalla
+                    // lista
                     if (listName.contains(nomeEliminato)) {
+                        // rimuovi il nome inserito
                         listName.remove(nomeEliminato);
                         System.out.println("Nome eliminato!");
+                        // lista aggiornata
                         System.out.println(listName);
                     } else {
                         System.out.println("Nome non trovato! Impossibile da eliminare!");
@@ -78,8 +82,10 @@ public class ES02_menu {
                 default:
                     // gestione scelta non valida
                     System.out.println("Riprova!");
+                    break;
             }
         }
+        scannerStr.close();
     }
 
 }
