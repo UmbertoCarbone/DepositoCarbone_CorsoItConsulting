@@ -22,7 +22,7 @@ public class ES02_menu {
             System.out.println("4 - Rimuovi nome");
             System.out.println("5 - Esci");
             System.out.print("Scegli un'opzione: ");
-            // se non lo inserisco fa il loop all'infinito!
+            //todo! se non lo inserisco fa il loop all'infinito! 😑😓
             scelta = scannerStr.nextInt();
             scannerStr.nextLine();
 
