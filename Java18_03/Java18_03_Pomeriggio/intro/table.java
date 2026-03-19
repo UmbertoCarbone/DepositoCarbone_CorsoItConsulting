@@ -1,4 +1,4 @@
-package intro;
+/* package intro;
 
 public class table {
     int[][] matrice = new int[3][3];
@@ -9,3 +9,4 @@ public class table {
         {7,8,9}
     }
 }
+ */
