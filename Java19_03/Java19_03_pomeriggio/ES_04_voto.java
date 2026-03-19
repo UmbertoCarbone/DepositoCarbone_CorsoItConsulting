@@ -43,7 +43,7 @@ public class ES_04_voto {
                     System.out.println("Voto più alto: " + votoMin(voti));
                     break;
                 case 4:
-                    System.out.println("ciao");
+                    System.out.println(isPromosso(voti));
                     break;
                 case 5:
                     System.out.println("ciao");
@@ -88,5 +88,14 @@ public class ES_04_voto {
 
         }
         return min;
+    }
+
+    public static String isPromosso(ArrayList<Integer> voti) {
+        double media = calcolaMedia(voti);
+        if (media >= 6) {
+            return "promosso";
+        } else {
+            return "bocciato";
+        }
     }
 }
