@@ -32,22 +32,33 @@ public class ES01_ArrayList {
         System.out.println("Sono stati inseriti Studenti : " + studenti.size());
 
         String risposta = "";
+
+        
+        // Ciclo per eliminare studenti finché l'utente non scrive "n"
         while (!risposta.equals("n")) {
+            // Chiede se si vuole eliminare uno studente
             System.out.println("Vuoi eliminare uno studente? (s/n)");
             risposta = scanner.nextLine();
+
+            // Se l'utente sceglie "s"
             if (risposta.equals("s")) {
                 System.out.println("Scrivi il nome dello studente da eliminare:");
                 String elimina = scanner.nextLine();
+                // Controlla se il nome esiste nella lista
                 if (studenti.contains(elimina)) {
-                    studenti.remove(elimina);
+                    studenti.remove(elimina); // elimina il nome
                     System.out.println("Studente eliminato!");
                 } else {
-                    System.out.println("Nome non trovato! Riprova.");
+                    System.out.println("Nome non trovato! Riprova."); // messaggio di errore
                 }
-            } else if (risposta.equals("n")) {
-                System.out.println("Studenti rimasti: " + studenti);
-            } else {
-                System.out.println("Risposta non valida! Scrivi 's' o 'n'.");
+            }
+            // Se l'utente sceglie "n"
+            else if (risposta.equals("n")) {
+                System.out.println("Studenti rimasti: " + studenti); // stampa la lista aggiornata
+            }
+            // Se l'utente scrive altro
+            else {
+                System.out.println("Risposta non valida! Scrivi 's' o 'n'."); // messaggio per input non valido
             }
         }
 
