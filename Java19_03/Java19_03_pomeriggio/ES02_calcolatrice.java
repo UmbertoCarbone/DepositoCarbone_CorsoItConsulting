@@ -19,6 +19,10 @@ public class ES02_calcolatrice {
         return a / b;
     }
 
+    static int potenza(int base, int esponente) {
+        return (int) Math.pow(base, esponente);
+    }
+
     static void logA() {
         System.out.println("Inserisci il primo numero");
     }
@@ -37,16 +41,17 @@ public class ES02_calcolatrice {
 
         while (scelta != 5) {
             System.err.println(" --CALCOLATRICE-- ");
-            System.err.println("1) ADDIZIONE ");
+            System.err.println(" 1) ADDIZIONE ");
             System.err.println(" 2) SOTTRAZIONE ");
             System.err.println(" 3) MOLTIPLICAZIONE ");
             System.err.println(" 4) DIVISIONE ");
-            System.err.println(" 5) ESCI ");
+            System.out.println("5) POTENZA ");
+            System.err.println(" 6) ESCI ");
             scelta = scanner.nextInt();
             scanner.nextLine();
 
             switch (scelta) {
-                case 1:
+                case 6:
                     logA();
                     numA = scanner.nextInt();
                     logB();
@@ -79,7 +84,11 @@ public class ES02_calcolatrice {
                     }
                     break;
                 case 5:
-                    System.out.println("Uscita.");
+                    logA();
+                    numA = scanner.nextInt();
+                    logB();
+                    numB = scanner.nextInt();
+                    System.out.println("Totale : " + potenza(numA, numB));
                     break;
                 default:
                     System.out.println("Scelta non valida!");
