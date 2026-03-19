@@ -7,7 +7,7 @@ public class Funzioni {
     }
 
     static void mostra(int numero) {
-        System.out.println("Numero: " + numero);
+        System.out.println("Numero: " + (10 + numero));
     }
 
     static void mostra(String testo) {
