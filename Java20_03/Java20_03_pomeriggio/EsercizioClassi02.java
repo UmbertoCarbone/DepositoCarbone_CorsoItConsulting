@@ -1,6 +1,7 @@
 package Java20_03.Java20_03_pomeriggio;
 
 class Persona {
+    // attributi
     String nome;
     int eta;
     String citta;
@@ -11,6 +12,7 @@ class Persona {
         System.out.println("Vivo a " + citta);
     }
 
+    // costruttore
     Persona(String nome, int eta, String citta) {
         this.nome = nome;
         this.eta = eta;
@@ -27,7 +29,7 @@ public class EsercizioClassi02 {
         primaPersona.mostraInfo();
         secondaPersona.mostraInfo();
 
-        // log di prova
+        // log di prova // Err
         System.out.println(primaPersona);
         System.out.println(secondaPersona);
     }
