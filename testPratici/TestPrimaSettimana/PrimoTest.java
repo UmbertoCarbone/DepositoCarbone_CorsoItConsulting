@@ -112,17 +112,23 @@ public class PrimoTest {
         }
     }
 
+    // case 3
     public static void cercaProdotto(ArrayList<String> nomiProdotti, ArrayList<Integer> quantitaProdotti,
             Scanner scannerStr) {
+        // Chiede all'utente il nome del prodotto da cercare
         System.out.println("Cerca prodotto: ");
         String searchProduct = scannerStr.nextLine();
+
+        // Scorre la lista dei prodotti
         for (int i = 0; i < nomiProdotti.size(); i++) {
+            // Se trova il prodotto, stampa nome e quantità e termina la funzione
             if (nomiProdotti.get(i).equals(searchProduct)) {
                 System.out.println(
                         "Prodotto trovato: " + nomiProdotti.get(i) + " | Quantità: " + quantitaProdotti.get(i));
                 return;
             }
         }
+        // Se non trova il prodotto, avvisa l'utente
         System.out.println("Prodotto non trovato");
     }
     // todo:non uscire da qua per le funzioni!
