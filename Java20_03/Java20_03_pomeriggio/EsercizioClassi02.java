@@ -18,8 +18,8 @@ class Persona {
         this.eta = eta;
         this.citta = citta;
     }
-
 }
+
 
 public class EsercizioClassi02 {
     public static void main(String[] args) {
