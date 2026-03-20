@@ -55,6 +55,8 @@ public class GestioneVeicolo {
                     break;
             }
         }
+        scannerStr.close();
+        scannerInt.close();
     }
 
     public static void inserisciDatiVeicolo(Scanner scannerStr, Scanner scannerInt, Veicolo veicolo) {
