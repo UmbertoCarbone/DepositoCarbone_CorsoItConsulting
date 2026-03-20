@@ -10,9 +10,13 @@ class Veicolo {
 }
 
 public class GestioneVeicolo {
+
     public static void main(String[] args) {
+
         Scanner scannerStr = new Scanner(System.in);
         Scanner scannerInt = new Scanner(System.in);
+
+        Veicolo veicolo = new Veicolo();
 
         int scelta = 0;
 
@@ -31,16 +35,16 @@ public class GestioneVeicolo {
 
             switch (scelta) {
                 case 1:
-                    System.out.println("prova");
+                    inserisciDatiVeicolo(scannerStr, scannerInt, veicolo);
                     break;
                 case 2:
-                    System.out.println("prova");
+                    datiVeicolo(veicolo);
                     break;
                 case 3:
-                    System.out.println("prova");
+                    modificaPrezzoVeicolo(scannerInt, veicolo);
                     break;
                 case 4:
-                    System.out.println("prova");
+                    verificaEta(scannerInt, veicolo);
                     /* break */;
                 case 5:
                     System.out.println("Esci");
@@ -50,6 +54,63 @@ public class GestioneVeicolo {
                     System.out.println("Riprova");
                     break;
             }
+        }
+    }
+
+    public static void inserisciDatiVeicolo(Scanner scannerStr, Scanner scannerInt, Veicolo veicolo) {
+        System.out.print("Marca: ");
+        veicolo.marca = scannerStr.nextLine();
+
+        System.out.print("Modello: ");
+        veicolo.modello = scannerStr.nextLine();
+
+        System.out.print("Anno: ");
+        veicolo.anno = scannerInt.nextInt();
+
+        System.out.print("Prezzo: ");
+        veicolo.prezzo = scannerInt.nextDouble();
+
+        // Controlli base
+        if (veicolo.prezzo <= 0) {
+            System.out.println("Prezzo non valido");
+        }
+
+        if (veicolo.anno <= 1900) {
+            System.out.println("Anno non valido");
+        }
+
+    }
+
+    public static void datiVeicolo(Veicolo veicolo) {
+        System.out.println("--- VEICOLO ---");
+        System.out.println("Marca: " + veicolo.marca);
+        System.out.println("Modello: " + veicolo.modello);
+        System.out.println("Anno: " + veicolo.anno);
+        System.out.println("Prezzo: " + veicolo.prezzo);
+    }
+
+    public static void modificaPrezzoVeicolo(Scanner scannerInt, Veicolo veicolo) {
+        System.out.println("Modifica il prezzo del veicolo");
+        double newPrice = scannerInt.nextDouble();
+        if (newPrice > 0) {
+            veicolo.prezzo = newPrice;
+            System.out.println("Prezzo nuovo inserito! ");
+        } else {
+            System.out.println("Riprova! hai inserito 0 ");
+        }
+    }
+
+    public static void verificaEta(Scanner scannerInt, Veicolo veicolo) {
+
+        int annoCorrente = 2026;
+        int eta = annoCorrente - veicolo.anno;
+
+        if (eta < 5) {
+            System.out.println("eta del veicolo e anno: " + veicolo.anno + " Nuovo (meno di 5 anni)");
+        } else if (eta <= 15) {
+            System.out.println("eta del veicolo e anno: " + veicolo.anno + " Usato (tra 5 e 15 anni)");
+        } else {
+            System.out.println("eta del veicolo e anno: " + veicolo.anno + " Vecchio (più di 15 anni)");
         }
     }
 }
