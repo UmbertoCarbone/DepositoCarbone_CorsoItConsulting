@@ -1,4 +1,4 @@
-package Java20_03.Java20_03_pomeriggio.Java24_03.JavaPomeriggio;
+package Java24_03.JavaPomeriggio;
 
 import java.util.Scanner;
 //creazione oggetti fuori dal main
@@ -35,7 +35,7 @@ class Negozio {
 
     // rihiama i dati
     void stampa() {
-        System.out.print("Negozio: " + nomeNegozio + " - ");
+        System.out.print("Negozio: " + this.nomeNegozio + " - ");
         if (prodotto != null) {
             prodotto.stampa();
         } else {
@@ -96,10 +96,12 @@ public class ES01_java {
         }
     }
 
+    // Funzione per inserire un prodotto in un negozio scelto dall'utente
     static void inserisciProdotto(Negozio[] negozi) {
         System.out.println("In quale negozio vuoi inserire il prodotto? (1-3)");
         int sceltaNegozio = scannerInt.nextInt();
 
+        // Controllo validità scelta
         if (sceltaNegozio < 1 || sceltaNegozio > 3) {
             System.out.println("Negozio non valido.");
             return;
@@ -111,21 +113,25 @@ public class ES01_java {
         System.out.print("Quantità disponibile: ");
         int quantita = scannerInt.nextInt();
 
+        // Crea il nuovo prodotto e lo assegna al negozio scelto
         Prodotto nuovoProdotto = new Prodotto(nome, prezzo, quantita);
         negozi[sceltaNegozio - 1].prodotto = nuovoProdotto;
 
         System.out.println("Prodotto inserito nel " + negozi[sceltaNegozio - 1].nomeNegozio);
     }
 
+    // Funzione per visualizzare i dati di tutti i negozi
     static void visualizzaNegozi(Negozio[] negozi) {
         for (int i = 0; i < negozi.length; i++) {
             negozi[i].stampa();
         }
     }
 
+    // Funzione per trovare e mostrare il negozio con il prodotto più costoso
     static void cercaProdottoCostoso(Negozio[] negozi) {
         Negozio negozioAlto = negozi[0];
         for (int i = 1; i < negozi.length; i++) {
+            // Confronta solo se entrambi i negozi hanno un prodotto
             if (negozi[i].prodotto != null && negozioAlto.prodotto != null) {
                 if (negozi[i].prodotto.prezzo > negozioAlto.prodotto.prezzo) {
                     negozioAlto = negozi[i];
@@ -140,37 +146,43 @@ public class ES01_java {
         }
     }
 
+    // Funzione per modificare la quantità di un prodotto in un negozio scelto
     static void modificaQuantita(Negozio[] negozi) {
         System.out.println("Scegli il negozio dove modificare la quantita (1-3)");
         int sceltaNegozio = scannerInt.nextInt();
 
+        // Controllo validità scelta
         if (sceltaNegozio < 1 || sceltaNegozio > 3) {
             System.out.println("Negozio non valido.");
             return;
         }
 
-        if (negozi[sceltaNegozio - 1].prodotto == null) {
+        Prodotto p = negozi[sceltaNegozio - 1].prodotto;
+
+        if (p == null) {
             System.out.println("Nessun prodotto in questo negozio.");
             return;
         }
 
         System.out.print("Nuova quantità: ");
-        int nuovaQuantita = scannerInt.nextInt();
-        negozi[sceltaNegozio - 1].prodotto.quantita = nuovaQuantita;
-
+        p.quantita = scannerInt.nextInt();
         System.out.println("Quantità aggiornata!");
     }
 
+    // Funzione per vendere una quantità di prodotto da un negozio scelto
     static void vendiProdotto(Negozio[] negozi) {
         System.out.println("Da quale negozio vuoi vendere? (1-3)");
         int sceltaNegozio = scannerInt.nextInt();
 
+        // Controllo validità scelta
         if (sceltaNegozio < 1 || sceltaNegozio > 3) {
             System.out.println("Negozio non valido.");
             return;
         }
 
-        if (negozi[sceltaNegozio - 1].prodotto == null) {
+        Prodotto p = negozi[sceltaNegozio - 1].prodotto;
+
+        if (p == null) {
             System.out.println("Nessun prodotto in questo negozio.");
             return;
         }
@@ -178,12 +190,13 @@ public class ES01_java {
         System.out.print("Quante unità vuoi vendere? ");
         int quantitaVenduta = scannerInt.nextInt();
 
-        if (quantitaVenduta > negozi[sceltaNegozio - 1].prodotto.quantita) {
-            System.out.println("Quantità insufficiente. Disponibili: " + negozi[sceltaNegozio - 1].prodotto.quantita);
+        // Controllo disponibilità
+        if (quantitaVenduta > p.quantita) {
+            System.out.println("Quantità insufficiente. Disponibili: " + p.quantita);
             return;
         }
 
-        negozi[sceltaNegozio - 1].prodotto.quantita -= quantitaVenduta;
-        System.out.println("Vendita effettuata! Quantità rimanente: " + negozi[sceltaNegozio - 1].prodotto.quantita);
+        p.quantita -= quantitaVenduta;
+        System.out.println("Vendita effettuata! Quantità rimanente: " + p.quantita);
     }
 }
