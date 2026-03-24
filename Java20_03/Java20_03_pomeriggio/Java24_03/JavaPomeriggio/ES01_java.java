@@ -51,6 +51,11 @@ public class ES01_java {
 
     public static void main(String[] args) {
         Negozio[] negozi = new Negozio[3];
+
+        negozi[0] = new Negozio("Negozio1", null);
+        negozi[1] = new Negozio("Negozio2", null);
+        negozi[2] = new Negozio("Negozio3", null);
+
         boolean continua = true;
 
         while (continua) {
@@ -64,7 +69,6 @@ public class ES01_java {
             System.out.print("Scegli un'opzione: ");
 
             int scelta = scannerInt.nextInt();
-            scannerStr.nextLine(); // consuma il newline
 
             switch (scelta) {
                 case 1:
@@ -93,22 +97,93 @@ public class ES01_java {
     }
 
     static void inserisciProdotto(Negozio[] negozi) {
-        // Da implementare
+        System.out.println("In quale negozio vuoi inserire il prodotto? (1-3)");
+        int sceltaNegozio = scannerInt.nextInt();
+
+        if (sceltaNegozio < 1 || sceltaNegozio > 3) {
+            System.out.println("Negozio non valido.");
+            return;
+        }
+        System.out.print("Nome prodotto: ");
+        String nome = scannerStr.nextLine();
+        System.out.print("Prezzo prodotto: ");
+        double prezzo = scannerInt.nextDouble();
+        System.out.print("Quantità disponibile: ");
+        int quantita = scannerInt.nextInt();
+
+        Prodotto nuovoProdotto = new Prodotto(nome, prezzo, quantita);
+        negozi[sceltaNegozio - 1].prodotto = nuovoProdotto;
+
+        System.out.println("Prodotto inserito nel " + negozi[sceltaNegozio - 1].nomeNegozio);
     }
 
     static void visualizzaNegozi(Negozio[] negozi) {
-        // Da implementare
+        for (int i = 0; i < negozi.length; i++) {
+            negozi[i].stampa();
+        }
     }
 
     static void cercaProdottoCostoso(Negozio[] negozi) {
-        // Da implementare
+        Negozio negozioAlto = negozi[0];
+        for (int i = 1; i < negozi.length; i++) {
+            if (negozi[i].prodotto != null && negozioAlto.prodotto != null) {
+                if (negozi[i].prodotto.prezzo > negozioAlto.prodotto.prezzo) {
+                    negozioAlto = negozi[i];
+                }
+            }
+        }
+        if (negozioAlto.prodotto == null) {
+            System.out.println("Nessun prodotto inserito.");
+        } else {
+            System.out.println("Il negozio con il prodotto più costoso è:");
+            negozioAlto.stampa();
+        }
     }
 
     static void modificaQuantita(Negozio[] negozi) {
-        // Da implementare
+        System.out.println("Scegli il negozio dove modificare la quantita (1-3)");
+        int sceltaNegozio = scannerInt.nextInt();
+
+        if (sceltaNegozio < 1 || sceltaNegozio > 3) {
+            System.out.println("Negozio non valido.");
+            return;
+        }
+
+        if (negozi[sceltaNegozio - 1].prodotto == null) {
+            System.out.println("Nessun prodotto in questo negozio.");
+            return;
+        }
+
+        System.out.print("Nuova quantità: ");
+        int nuovaQuantita = scannerInt.nextInt();
+        negozi[sceltaNegozio - 1].prodotto.quantita = nuovaQuantita;
+
+        System.out.println("Quantità aggiornata!");
     }
 
     static void vendiProdotto(Negozio[] negozi) {
-        // Da implementare
+        System.out.println("Da quale negozio vuoi vendere? (1-3)");
+        int sceltaNegozio = scannerInt.nextInt();
+
+        if (sceltaNegozio < 1 || sceltaNegozio > 3) {
+            System.out.println("Negozio non valido.");
+            return;
+        }
+
+        if (negozi[sceltaNegozio - 1].prodotto == null) {
+            System.out.println("Nessun prodotto in questo negozio.");
+            return;
+        }
+
+        System.out.print("Quante unità vuoi vendere? ");
+        int quantitaVenduta = scannerInt.nextInt();
+
+        if (quantitaVenduta > negozi[sceltaNegozio - 1].prodotto.quantita) {
+            System.out.println("Quantità insufficiente. Disponibili: " + negozi[sceltaNegozio - 1].prodotto.quantita);
+            return;
+        }
+
+        negozi[sceltaNegozio - 1].prodotto.quantita -= quantitaVenduta;
+        System.out.println("Vendita effettuata! Quantità rimanente: " + negozi[sceltaNegozio - 1].prodotto.quantita);
     }
 }
