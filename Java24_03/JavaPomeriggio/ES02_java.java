@@ -2,12 +2,14 @@ package Java24_03.JavaPomeriggio;
 
 import java.util.Scanner;
 
+// Classe che rappresenta un videogioco
 class Gioco {
     String titolo;
     String genere;
     double costoSviluppo;
     String statoProgetto;
 
+    // Costruttore della classe Gioco
     Gioco(String titolo, String genere, double costoSviluppo, String statoProgetto) {
         this.titolo = titolo;
         this.genere = genere;
@@ -15,6 +17,7 @@ class Gioco {
         this.statoProgetto = statoProgetto;
     }
 
+    // Funzione per stampare i dati del gioco
     void stampaGioco() {
         System.out.println("Titolo: " + this.titolo);
         System.out.println("Genere: " + this.genere);
@@ -23,22 +26,25 @@ class Gioco {
     }
 }
 
+// Classe che rappresenta un team di sviluppo
 class Team {
     String nomeTeam;
     int numeroSviluppatori;
-    Gioco gioco;
+    Gioco gioco; // Oggetto Gioco assegnato al team
 
+    // Costruttore della classe Team
     Team(String nomeTeam, int numeroSviluppatori, Gioco gioco) {
         this.nomeTeam = nomeTeam;
         this.numeroSviluppatori = numeroSviluppatori;
         this.gioco = gioco;
     }
 
+    // Funzione per stampare i dati del team e del gioco assegnato (se presente)
     void stampaTeam() {
         System.out.println("Nome team: " + this.nomeTeam);
         System.out.println("Numero sviluppatori: " + this.numeroSviluppatori);
 
-        // se il gioco nel menu e' stato assegnato, lo stampa
+        // Se il gioco è stato assegnato, lo stampa
         if (this.gioco != null) {
             System.out.println("Gioco assegnato:");
             this.gioco.stampaGioco();
@@ -49,14 +55,17 @@ class Team {
 }
 
 public class ES02_java {
+    // Scanner per input da tastiera
     static Scanner scanner = new Scanner(System.in);
 
+    // Array di giochi disponibili
     static Gioco[] giochi = {
             new Gioco("Dark Souls", "Action RPG", 500000, "IN SVILUPPO"),
             new Gioco("FIFA 26", "Sport", 1200000, "IN TEST"),
             new Gioco("Minecraft 2", "Sandbox", 300000, "PUBBLICATO")
     };
 
+    // Array di team disponibili
     static Team[] teams = {
             new Team("CloudGames", 5, null),
             new Team("GameIntro", 3, null),
@@ -64,9 +73,9 @@ public class ES02_java {
     };
 
     public static void main(String[] args) {
-
         int scelta = 0;
 
+        // Ciclo principale del menu
         while (scelta != 5) {
             System.out.println("\n--- MENU ---");
             System.out.println("1 - Assegna gioco a un team");
@@ -77,6 +86,7 @@ public class ES02_java {
             System.out.print("Scelta: ");
             scelta = scanner.nextInt();
 
+            // Gestione delle scelte del menu
             switch (scelta) {
                 case 1:
                     assegnaGioco();
@@ -100,6 +110,7 @@ public class ES02_java {
         scanner.close();
     }
 
+    // Funzione per assegnare un gioco a un team
     static void assegnaGioco() {
         System.out.println("In quale team vuoi inserire il gioco? (1-3)");
         for (int i = 0; i < teams.length; i++) {
@@ -117,6 +128,7 @@ public class ES02_java {
         System.out.println("Gioco assegnato con successo!");
     }
 
+    // Funzione per visualizzare tutti i team e i giochi assegnati
     static void visualizzaTeam() {
         for (int i = 0; i < teams.length; i++) {
             teams[i].stampaTeam();
@@ -124,6 +136,7 @@ public class ES02_java {
         }
     }
 
+    // Funzione per trovare e stampare il gioco con il costo di sviluppo più alto
     static void costoSviluppoPiuAlto() {
         if (giochi.length == 0) {
             System.out.println("Nessun gioco presente.");
@@ -138,23 +151,24 @@ public class ES02_java {
         }
         System.out.println("Gioco con costo di sviluppo più alto:");
         max.stampaGioco();
-
     }
 
+    // Funzione per modificare lo stato di un gioco assegnato a un team
     static void modificaStatoGioco() {
-        //scegliere il team da 1 a 3
+        // Scegliere il team
         System.out.println("Scegli il team a cui appartiene il gioco da modificare (1-3):");
         for (int i = 0; i < teams.length; i++) {
             System.out.println((i + 1) + " - " + teams[i].nomeTeam);
         }
-        //scelta gioco -1 
         int sceltaTeam = scanner.nextInt() - 1;
 
+        // Controllo se il team ha un gioco assegnato
         if (teams[sceltaTeam].gioco == null) {
             System.out.println("Nessun gioco assegnato a questo team.");
             return;
         }
 
+        // Mostra stato attuale e chiede il nuovo stato
         System.out.println("Stato attuale: " + teams[sceltaTeam].gioco.statoProgetto);
         System.out.println("Scegli il nuovo stato:");
         System.out.println("1 - IN SVILUPPO");
@@ -162,6 +176,7 @@ public class ES02_java {
         System.out.println("3 - PUBBLICATO");
         int sceltaStato = scanner.nextInt();
 
+        // Modifica lo stato in base alla scelta
         switch (sceltaStato) {
             case 1:
                 teams[sceltaTeam].gioco.statoProgetto = "IN SVILUPPO";
@@ -178,5 +193,4 @@ public class ES02_java {
         }
         System.out.println("Stato modificato con successo!");
     }
-
 }
