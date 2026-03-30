@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.sql.*;
 
 class Book {
     String title;
@@ -9,25 +10,18 @@ class Book {
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
-        // quando creiamo un libro è sempre disponibile di default
         this.isAvailable = true;
     }
 
     void displayBookInfo() {
-        // il ? è un if/else compatto:
-        // se isAvailable è true stampa "Sì", altrimenti stampa "No"
         System.out.println(
                 "Titolo: " + title + " | Autore: " + author + " | Disponibile: " + (isAvailable ? "Sì" : "No"));
     }
 }
 
 class Library {
-    // ArrayList di tipo Book: ogni elemento è un oggetto Book
-    // i libri appartengono alla Library, per questo stanno qui e non nel main
     ArrayList<Book> books = new ArrayList<>();
 
-    // il parametro "Book book" significa: mi aspetto un oggetto di tipo Book
-    // Book = tipo (classe creata da noi), book = nome della variabile
     void addBook(Book book) {
         books.add(book);
     }
@@ -39,20 +33,14 @@ class Library {
         }
         for (int i = 0; i < books.size(); i++) {
             System.out.print((i + 1) + " - ");
-            // (i+1) perché l'ArrayList parte da 0 ma l'utente vede i numeri da 1
             books.get(i).displayBookInfo();
         }
     }
 
     void borrowBook(String title) {
-        // "Book b" è una variabile temporanea che rappresenta un libro alla volta
-        // ad ogni giro del for, b è un libro diverso dell'ArrayList
         for (Book b : books) {
-            // equalsIgnoreCase: confronta le stringhe ignorando maiuscole/minuscole
             if (b.title.equalsIgnoreCase(title)) {
                 if (b.isAvailable) {
-                    // b non è una copia ma un riferimento all'oggetto originale
-                    // quindi modificando b.isAvailable modifichiamo il libro nell'ArrayList
                     b.isAvailable = false;
                     System.out.println("Hai preso in prestito: " + b.title);
                 } else {
@@ -76,22 +64,14 @@ class Library {
     }
 
     void searchBook(String keyword) {
-        // serve a capire se almeno un libro è stato trovato DOPO il for
-        // non possiamo stampare "non trovato" dentro il for perché
-        // il for scorre tutti i libri e stamperebbe il messaggio per ogni libro che non
-        // corrisponde
         boolean trovato = false;
         for (Book b : books) {
-            // contains: cerca se la stringa CONTIENE la keyword (ricerca parziale)
-            // toLowerCase: converte tutto in minuscolo per ignorare maiuscole/minuscole
-            // diverso da equalsIgnoreCase che richiede la stringa intera uguale
             if (b.title.toLowerCase().contains(keyword.toLowerCase()) ||
                     b.author.toLowerCase().contains(keyword.toLowerCase())) {
                 b.displayBookInfo();
                 trovato = true;
             }
         }
-        // ! = negazione: se trovato è false, !trovato è true
         if (!trovato) {
             System.out.println("Nessun libro trovato.");
         }
@@ -101,13 +81,22 @@ class Library {
 public class ES03_java {
 
     static Scanner scanner = new Scanner(System.in);
-    // Library con L maiuscola = tipo (classe)
-    // library con l minuscola = nome della variabile (oggetto)
-    // è statica perché deve essere accessibile da tutte le funzioni statiche
-    // è una sola perché abbiamo una sola biblioteca con tanti libri dentro
     static Library library = new Library();
+    // connessione al database MySQL
+    static Connection conn;
 
     public static void main(String[] args) {
+
+        // connessione al database prima di tutto
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblioteca", "root", "root");
+            System.out.println("Connesso al database!");
+        } catch (SQLException e) {
+            System.out.println("Errore di connessione al database.");
+            e.printStackTrace();
+            return;
+        }
+
         boolean continua = true;
 
         while (continua) {
@@ -121,9 +110,6 @@ public class ES03_java {
             System.out.print("Scelta: ");
 
             int scelta = scanner.nextInt();
-            // dopo nextInt() rimane un \n nel buffer
-            // senza questa riga la prossima nextLine() leggerebbe il \n e salterebbe la
-            // domanda
             scanner.nextLine();
 
             switch (scelta) {
@@ -149,6 +135,14 @@ public class ES03_java {
                     System.out.println("Scelta non valida.");
             }
         }
+
+        // chiude la connessione quando si esce
+        try {
+            conn.close();
+            System.out.println("Connessione chiusa.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     static void aggiungiLibro() {
@@ -158,10 +152,21 @@ public class ES03_java {
         System.out.print("Autore: ");
         String author = scanner.nextLine();
 
-        // new Book(title, author) crea prima il libro con titolo e autore
-        // poi lo passa direttamente ad addBook che lo aggiunge all'ArrayList
+        // aggiunge il libro all'ArrayList
         library.addBook(new Book(title, author));
-        System.out.println("Libro aggiunto!");
+
+        // salva il libro anche nel database
+        try {
+            String sql = "INSERT INTO books (title, author, isAvailable) VALUES (?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, title);
+            stmt.setString(2, author);
+            stmt.setBoolean(3, true);
+            stmt.executeUpdate();
+            System.out.println("Libro aggiunto!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     static void visualizzaLibri() {
