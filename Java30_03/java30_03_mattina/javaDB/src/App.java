@@ -86,7 +86,7 @@ public class App {
     static Connection conn;
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/biblioteca2";
+        String url = "jdbc:mysql://localhost:3306/biblioteca";
         String user = "root";
         String password = "root";
 
