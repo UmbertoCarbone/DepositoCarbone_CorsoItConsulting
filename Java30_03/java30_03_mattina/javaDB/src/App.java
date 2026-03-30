@@ -86,18 +86,22 @@ public class App {
     static Connection conn;
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/biblioteca";
+        String url = "jdbc:mysql://localhost:3306/biblioteca2";
         String user = "root";
         String password = "root";
 
         // connessione al database prima di tutto
         try {
-            Connection conn = DriverManager.getConnection(url, user, password);
+            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connesso al database!");
-            conn.close();
             System.out.println("Configurazione JDBC ok!");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        // controllo se la connessione è fallita
+        if (conn == null) {
+            System.err.println("Errore: connessione al database fallita. Controlla driver, url, utente e password.");
+            System.exit(1);
         }
 
         boolean continua = true;
