@@ -1,12 +1,11 @@
 package Java30_03_pomeriggio;
-
 import java.util.ArrayList;
 
 public class Studente {
-    // Campi privati (incapsulamento)
+    
     private String nome;
     private int voto;
-    private static int contatore = 0; // per id autoincrementante
+    private static int contatore = 0; 
     private int id;
 
     // Costruttore pubblico
@@ -16,17 +15,17 @@ public class Studente {
         setVoto(voto); // usa il setter per validare
     }
 
-    // Getter per nome
+    // Getter per nome //!
     public String getNome() {
         return nome;
     }
 
-    // Getter per voto
+    // Getter per voto //!
     public int getVoto() {
         return voto;
     }
 
-    // Getter per id
+    // Getter per id //!
     public int getId() {
         return id;
     }
@@ -51,10 +50,14 @@ public class Studente {
         studenti.add(new Studente("Antonio", 10));
         studenti.add(new Studente("Luca", 7));
         studenti.add(new Studente("Anna", 9));
+        studenti.add(new Studente("Sara", 11));
         studenti.add(new Studente("Sara", 6));
 
         for (Studente s : studenti) {
-            s.stampaInfo();
+            //todo: validazione voto 
+            if (s.getVoto() > 0) { 
+                s.stampaInfo();
+            }
         }
     }
 }
