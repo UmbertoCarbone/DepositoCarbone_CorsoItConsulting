@@ -1,18 +1,19 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.sql.*;
 
 class Book {
     String title;
     String author;
     boolean isAvailable;
 
+    // costruttore
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
         this.isAvailable = true;
     }
 
+    // mostra le informazioni del libro
     void displayBookInfo() {
         System.out.println(
                 "Titolo: " + title + " | Autore: " + author + " | Disponibile: " + (isAvailable ? "Sì" : "No"));
@@ -22,10 +23,12 @@ class Book {
 class Library {
     ArrayList<Book> books = new ArrayList<>();
 
+    // aggiunge un libro alla biblioteca
     void addBook(Book book) {
         books.add(book);
     }
 
+    // mostra tutti i libri presenti
     void displayBooks() {
         if (books.isEmpty()) {
             System.out.println("Nessun libro disponibile.");
@@ -37,6 +40,7 @@ class Library {
         }
     }
 
+    // prende in prestito un libro se disponibile
     void borrowBook(String title) {
         for (Book b : books) {
             if (b.title.equalsIgnoreCase(title)) {
@@ -52,6 +56,7 @@ class Library {
         System.out.println("Libro non trovato.");
     }
 
+    // restituisce un libro e lo segna come disponibile
     void returnBook(String title) {
         for (Book b : books) {
             if (b.title.equalsIgnoreCase(title)) {
@@ -63,6 +68,7 @@ class Library {
         System.out.println("Libro non trovato.");
     }
 
+    // cerca un libro per titolo o autore
     void searchBook(String keyword) {
         boolean trovato = false;
         for (Book b : books) {
@@ -82,21 +88,8 @@ public class ES03_java {
 
     static Scanner scanner = new Scanner(System.in);
     static Library library = new Library();
-    // connessione al database MySQL
-    static Connection conn;
 
     public static void main(String[] args) {
-
-        // connessione al database prima di tutto
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblioteca", "root", "root");
-            System.out.println("Connesso al database!");
-        } catch (SQLException e) {
-            System.out.println("Errore di connessione al database.");
-            e.printStackTrace();
-            return;
-        }
-
         boolean continua = true;
 
         while (continua) {
@@ -110,7 +103,7 @@ public class ES03_java {
             System.out.print("Scelta: ");
 
             int scelta = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // pulizia buffer dopo la scelta del menu
 
             switch (scelta) {
                 case 1:
@@ -135,14 +128,6 @@ public class ES03_java {
                     System.out.println("Scelta non valida.");
             }
         }
-
-        // chiude la connessione quando si esce
-        try {
-            conn.close();
-            System.out.println("Connessione chiusa.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     static void aggiungiLibro() {
@@ -152,21 +137,8 @@ public class ES03_java {
         System.out.print("Autore: ");
         String author = scanner.nextLine();
 
-        // aggiunge il libro all'ArrayList
         library.addBook(new Book(title, author));
-
-        // salva il libro anche nel database
-        try {
-            String sql = "INSERT INTO books (title, author, isAvailable) VALUES (?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, title);
-            stmt.setString(2, author);
-            stmt.setBoolean(3, true);
-            stmt.executeUpdate();
-            System.out.println("Libro aggiunto!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Libro aggiunto!");
     }
 
     static void visualizzaLibri() {
@@ -176,18 +148,21 @@ public class ES03_java {
     static void cercaLibro() {
         System.out.print("Cerca per titolo o autore: ");
         String keyword = scanner.nextLine();
+
         library.searchBook(keyword);
     }
 
     static void prendiInPrestito() {
         System.out.print("Titolo del libro: ");
         String title = scanner.nextLine();
+
         library.borrowBook(title);
     }
 
     static void restituisciLibro() {
         System.out.print("Titolo del libro da restituire: ");
         String title = scanner.nextLine();
+
         library.returnBook(title);
     }
 }

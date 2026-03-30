@@ -86,15 +86,18 @@ public class App {
     static Connection conn;
 
     public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/biblioteca";
+        String user = "root";
+        String password = "root";
 
         // connessione al database prima di tutto
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblioteca", "root", "root");
+            Connection conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connesso al database!");
+            conn.close();
+            System.out.println("Configurazione JDBC ok!");
         } catch (SQLException e) {
-            System.out.println("Errore di connessione al database.");
             e.printStackTrace();
-            return;
         }
 
         boolean continua = true;
