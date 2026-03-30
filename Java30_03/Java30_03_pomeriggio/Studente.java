@@ -32,9 +32,10 @@ public class Studente {
 
     // Setter per voto con validazione
     public void setVoto(int voto) {
-        if (voto >= 0 && voto <= 10) {
+        if (voto > 0 && voto <= 10) {
             this.voto = voto;
         } else {
+            this.voto = 1;
             System.out.println("Errore: il voto deve essere compreso tra 0 e 10.");
         }
     }
@@ -54,10 +55,8 @@ public class Studente {
         studenti.add(new Studente("Sara", 6));
 
         for (Studente s : studenti) {
-            //todo: validazione voto 
-            if (s.getVoto() > 0) { 
-                s.stampaInfo();
-            }
+            // validazione voto 
+            s.stampaInfo();
         }
     }
 }
