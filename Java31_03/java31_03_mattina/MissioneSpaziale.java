@@ -176,7 +176,7 @@ public class MissioneSpaziale {
             scanner.nextLine();
 
             switch (scelta) {
-                case 1:1
+                case 1:
                 
                     creaAstronauta();
                     break;
