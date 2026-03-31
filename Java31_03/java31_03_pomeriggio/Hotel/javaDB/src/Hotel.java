@@ -75,13 +75,13 @@ class Suite extends Camera {
 
 public class Hotel {
     private String nome;
-    private ArrayList<Camera> camere = new ArrayList<>();
+    private static ArrayList<Camera> camere = new ArrayList<>();
 
     public Hotel(String nome) {
         this.nome = nome;
     }
 
-    public void aggiungiCamera(Camera camera) {
+    public static void aggiungiCamera(Camera camera) {
         camere.add(camera);
     }
 
@@ -118,10 +118,10 @@ public class Hotel {
 
             switch (scelta) {
                 case 1:
-                    aggiungiCamera();
+                    aggiungiCamera(creaCamera());
                     break;
                 case 2:
-                    System.out.println("4 - Esci");
+                    
                     break;
                 case 3:
                     System.out.println("4 - Esci");
@@ -139,6 +139,27 @@ public class Hotel {
         }
     }
 
-    static void creaCamera() {
-     
+    static Camera creaCamera() {
+        System.out.print("Numero camera: ");
+        int n = scanner.nextInt();
+        System.out.print("Prezzo: ");
+        float p = scanner.nextFloat();
+        scanner.nextLine();
+        System.out.print("Camera o Suite? (c/s): ");
+        String tipoDiCamera = scanner.nextLine();
+
+        if (tipoDiCamera.equalsIgnoreCase("c")) {
+            Camera camera = new Camera(n, p);
+            System.out.println("Camera Creata!");
+            return camera;
+        } else if (tipoDiCamera.equalsIgnoreCase("s")) {
+            Suite suite = new Suite(n, p, "Servizi extra inclusi");
+            System.out.println("Ispettore creato!");
+            return suite;
+        } else {
+            System.out.println("Ruolo non valido.");
+            return null;
+        }
+    }
+
 }
