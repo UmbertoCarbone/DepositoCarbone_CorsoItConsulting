@@ -95,8 +95,9 @@ public class Hotel {
         return count;
     }
 
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Inserisci il nome dell'hotel: ");
         String nomeHotel = scanner.nextLine();
@@ -117,7 +118,7 @@ public class Hotel {
 
             switch (scelta) {
                 case 1:
-                    System.out.println("4 - Esci");
+                    aggiungiCamera();
                     break;
                 case 2:
                     System.out.println("4 - Esci");
@@ -135,9 +136,9 @@ public class Hotel {
                 default:
                     System.out.println("Scelta non valida. Riprova.");
             }
-        } 
+        }
     }
-    static void aggiungiCamera(){
-        
-    }
+
+    static void creaCamera() {
+     
 }
